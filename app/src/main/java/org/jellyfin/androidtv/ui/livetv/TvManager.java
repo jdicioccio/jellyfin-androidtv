@@ -97,8 +97,11 @@ public class TvManager {
         TvManagerHelperKt.loadLiveTvChannels(fragment, channels -> {
             if (channels != null) {
                 allChannels = new ArrayList<>(channels);
-                outerResponse.apply(fillChannelIds());
-            } else {
+                int ndx = fillChannelIds();
+                if (fragment.isAdded()) {
+                    outerResponse.apply(ndx);
+                }
+            } else if (fragment.isAdded()) {
                 outerResponse.apply(0);
             }
             return null;
